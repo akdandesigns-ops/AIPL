@@ -44,7 +44,7 @@ export default function Ceremony({ onOpened }: CeremonyProps) {
             if (self.progress > 0 && stage === 'ready') {
               setStage('opening');
             }
-            if (self.progress === 1 && stage !== 'opened') {
+            if (self.progress === 1 && (stage as string) !== 'opened') {
               setStage('opened');
               onOpened();
             }

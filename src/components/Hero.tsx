@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 import './Hero.css';
 
