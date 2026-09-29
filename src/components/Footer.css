@@ -1,0 +1,158 @@
+.footer-section {
+  background-color: var(--primary);
+  color: white;
+  padding: 8rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.footer-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.footer-wave path {
+  fill: url(#wave-gradient);
+}
+
+.footer-container {
+  position: relative;
+  z-index: 1;
+}
+
+.brand-statement {
+  text-align: center;
+  margin-bottom: 5rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-statement h3 {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 500;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.brand-highlight {
+  background: linear-gradient(90deg, #fff, var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  color: rgba(255,255,255,0.8);
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.contact-link:hover {
+  color: white;
+  transform: translateX(5px);
+}
+
+.contact-link svg {
+  color: var(--secondary);
+  transition: transform 0.3s ease;
+}
+
+.contact-link:hover svg {
+  transform: scale(1.2);
+}
+
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .footer-actions {
+    align-items: flex-end;
+  }
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.social-links span {
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  margin-right: 1rem;
+}
+
+.social-icon {
+  color: white;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+.social-icon:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  transform: translateY(-5px) rotate(10deg);
+  box-shadow: 0 10px 20px rgba(217, 4, 41, 0.4);
+}
+
+.calendar-btn {
+  font-size: 1.1rem;
+  padding: 1.2rem 2.5rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .calendar-btn {
+    width: auto;
+  }
+}

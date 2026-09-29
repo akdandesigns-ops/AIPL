@@ -1,0 +1,106 @@
+.welcome-section {
+  background-color: var(--bg-color);
+  position: relative;
+}
+
+.welcome-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .welcome-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.welcome-title {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
+  text-transform: uppercase;
+  perspective: 1000px;
+}
+
+.welcome-title span {
+  display: block;
+}
+
+.welcome-title span:last-child {
+  color: var(--secondary);
+}
+
+.welcome-subtitle {
+  font-family: 'Inter', cursive;
+  font-size: 1.8rem;
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.welcome-p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.welcome-p strong {
+  color: var(--primary);
+}
+
+.highlight-p {
+  color: var(--primary);
+  font-weight: 500;
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--accent);
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent);
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.welcome-image {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 0 0 1px var(--glass-border);
+}
+
+.welcome-image-wrapper {
+  width: 100%;
+  padding-top: 90%; 
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(5, 8, 17, 0.4));
+  z-index: 1;
+}
+
+.welcome-image-inner {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 120%; /* Extra height for parallax */
+  background-size: cover;
+  background-position: center;
+  transform-origin: center;
+  z-index: 0;
+}

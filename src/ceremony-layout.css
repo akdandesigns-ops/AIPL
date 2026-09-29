@@ -1,0 +1,15 @@
+/* App structure for Ceremony */
+.is-hidden-behind-ceremony {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1; /* Below ceremony z-index (9999) */
+}
+
+/* Ensure body can scroll if ceremony adds spacer */
+body.ceremony-active {
+  /* No special overflow needed, ScrollTrigger manages spacer */
+}

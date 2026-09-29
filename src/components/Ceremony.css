@@ -1,0 +1,207 @@
+.ceremony-wrapper {
+  position: relative; /* Pinned by ScrollTrigger */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ceremony-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50vw;
+  background-color: var(--bg-color); /* Warm ivory */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  z-index: 10;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.02);
+}
+
+.left-cover {
+  left: 0;
+  border-right: 1px solid rgba(212, 175, 55, 0.2); /* Gold seam */
+}
+
+.right-cover {
+  right: 0;
+  border-left: 1px solid rgba(212, 175, 55, 0.2); /* Gold seam */
+}
+
+.ribbon-layer {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ribbon-half {
+  position: absolute;
+  top: -20px;
+  height: 40px;
+  width: 50vw;
+  background: linear-gradient(to bottom, #d90429 0%, #ef233c 50%, #d90429 100%);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2), inset 0 2px 0 rgba(212, 175, 55, 0.8), inset 0 -2px 0 rgba(212, 175, 55, 0.8);
+}
+
+.ribbon-half::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  background-size: 20px 100%;
+}
+
+.left-ribbon {
+  right: 50%;
+  transform-origin: left center;
+}
+
+.right-ribbon {
+  left: 50%;
+  transform-origin: right center;
+}
+
+.ceremony-bow {
+  position: absolute;
+  z-index: 25;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bow-knot {
+  width: 24px;
+  height: 30px;
+  background: linear-gradient(135deg, #ef233c, #d90429);
+  border-radius: 8px;
+  z-index: 30;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 0 4px rgba(212, 175, 55, 0.6);
+}
+
+.bow-loop {
+  position: absolute;
+  width: 60px;
+  height: 50px;
+  background: radial-gradient(ellipse at center, #ef233c 0%, #d90429 100%);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.2);
+  z-index: 29;
+}
+
+.left-loop {
+  right: 50%;
+  border-radius: 50% 10% 10% 50%;
+  transform: translateX(10px) rotate(-10deg);
+}
+
+.right-loop {
+  left: 50%;
+  border-radius: 10% 50% 50% 10%;
+  transform: translateX(-10px) rotate(10deg);
+}
+
+.ceremony-scissors {
+  position: absolute;
+  top: -60px;
+  opacity: 0;
+  z-index: 35;
+  transform: rotate(-45deg);
+}
+
+.preloader-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100px);
+  z-index: 30;
+  transition: opacity 0.5s ease;
+}
+
+.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.instruction-text {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.desktop-text { display: block; }
+.mobile-text { display: none; }
+
+@media (max-width: 768px) {
+  .desktop-text { display: none; }
+  .mobile-text { display: block; }
+}
+
+.scroll-indicator {
+  width: 1px;
+  height: 40px;
+  background: var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 50%;
+  background: var(--accent);
+  animation: scrollDown 1.5s infinite ease-in-out;
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+.skip-btn {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  z-index: 40;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.5);
+  transition: all 0.2s ease;
+}
+
+.skip-btn:hover {
+  color: var(--primary);
+  background: rgba(255,255,255,0.8);
+}
