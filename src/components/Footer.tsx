@@ -74,13 +74,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-actions" ref={el => { elementsRef.current[2] = el; }}>
-            <div className="social-links">
-              <span>FOLLOW US</span>
-              <a href="#" className="social-icon">IN</a>
-              <a href="#" className="social-icon">FB</a>
-              <a href="#" className="social-icon">IG</a>
-            </div>
-            
+
             <button className="btn btn-secondary calendar-btn" onClick={addToCalendar}>
               <CalendarPlus size={20} />
               Add to Calendar
