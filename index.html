@@ -273,10 +273,10 @@
       <canvas id="factoryCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
       
       <!-- Scroll Indicator -->
-      <div id="intro-scroll-indicator" class="absolute bottom-12 w-full z-50 flex flex-col items-center justify-center transition-opacity duration-500">
-        <span class="text-[10px] font-extrabold uppercase tracking-[0.3em] text-white/90 mb-3 drop-shadow-md">Scroll to Enter</span>
-        <div class="w-5 h-8 border-[1.5px] border-white/60 rounded-full flex justify-center p-1 drop-shadow-md">
-          <div class="w-1 h-1.5 bg-white rounded-full animate-bounce mt-0.5"></div>
+      <div id="intro-scroll-indicator" class="absolute inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500 pointer-events-none">
+        <span class="text-xs sm:text-sm font-extrabold uppercase tracking-[0.3em] text-navy mb-4 drop-shadow-lg">Scroll to Enter</span>
+        <div class="w-6 h-10 border-[2px] border-navy rounded-full flex justify-center p-1 shadow-lg bg-white/20 backdrop-blur-sm">
+          <div class="w-1.5 h-2.5 bg-navy rounded-full animate-bounce mt-1"></div>
         </div>
       </div>
     </div>
@@ -288,35 +288,17 @@
   <header class="sticky top-0 z-30 bg-navy-950/95 backdrop-blur-md border-b border-gold/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
       
-      <!-- Brand Logo Lockup (Responsive Spacing) -->
-      <a href="#" class="flex items-center space-x-2 sm:space-x-3.5 group focus:outline-none shrink-0">
-        <img src="./public/Attur AD Creative 2.png" alt="AIPL Logo" class="h-10 sm:h-12 w-auto object-contain bg-white/95 px-2 py-1 rounded-lg border border-gold/30 shadow-sm group-hover:scale-105 transition-transform" />
-        
-        <div class="hidden md:flex flex-col">
-          <span class="text-base sm:text-xl font-extrabold font-serif tracking-tight text-white group-hover:text-gold transition-colors leading-tight">
-            AIPL <span class="text-gold font-light">|</span> Attur International
-          </span>
-          <span class="text-[8px] sm:text-[10px] font-medium tracking-widest text-slate-400 uppercase">
-            Carve the engineering
-          </span>
-        </div>
-      </a>
-
+      <!-- Brand Logo Lockup moved to Hero Section -->
+      
       <!-- Quick Nav Links (Desktop) -->
-      <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-200">
+      <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-200 w-full justify-center">
         <a href="#facility" class="hover:text-gold transition-colors">Partnership Meet</a>
         <a href="#programme" class="hover:text-gold transition-colors">Programme Schedule</a>
         <a href="#pillars" class="hover:text-gold transition-colors">Core Pillars</a>
         <a href="#venue-map" class="hover:text-gold transition-colors">Location</a>
       </nav>
-
-      <!-- CTA Button (Optimized Mobile Spacing) -->
-      <div class="flex items-center shrink-0">
-        <a href="#programme" class="inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-full text-navy bg-gold hover:bg-gold-400 shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap">
-          <span class="hidden sm:inline">Explore Programme</span>
-          <span class="sm:hidden">Explore</span>
-        </a>
-      </div>
+      
+      <!-- CTA Button Removed -->
 
     </div>
   </header>
@@ -339,6 +321,19 @@
       <div class="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-gold/60 rounded-tr-3xl pointer-events-none"></div>
       <div class="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-gold/60 rounded-bl-3xl pointer-events-none"></div>
       <div class="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-gold/60 rounded-br-3xl pointer-events-none"></div>
+
+      <!-- AIPL Logo Arriving First -->
+      <div class="text-center space-y-3 mb-10 relative z-10 flex flex-col items-center justify-center" data-gsap="fade-down">
+        <img src="/Attur AD Creative 2.png" alt="AIPL Logo" class="h-16 sm:h-20 md:h-24 w-auto object-contain transition-transform" />
+        <div class="flex flex-col mt-2">
+          <span class="text-xl sm:text-2xl font-extrabold font-serif tracking-tight text-navy leading-tight">
+            AIPL <span class="text-gold font-light">|</span> Attur International
+          </span>
+          <span class="text-[10px] sm:text-xs font-medium tracking-widest text-navy-600 uppercase mt-1">
+            Carve the engineering
+          </span>
+        </div>
+      </div>
 
       <!-- Top Crest Badge -->
       <div class="text-center space-y-3 mb-6 relative z-10" data-gsap="fade-down">
@@ -408,8 +403,8 @@
         <!-- Layer 2: Transparent Aerial Factory Campus Visual -->
         <div id="parallax-factory" class="relative z-20 w-full max-w-[1050px] flex items-center justify-center transform transition-transform duration-300">
           <img id="aerial-campus-img" 
-               src="./public/factory_campus_cutout.png" 
-               alt="Elevated aerial cutout visual of modern smart manufacturing facility campus" 
+               src="/facotry image.png" 
+               alt="Elevated aerial visual of modern smart manufacturing facility campus" 
                width="1100" 
                height="600" 
                class="w-[85%] max-w-[1050px] h-auto object-contain drop-shadow-2xl" 
