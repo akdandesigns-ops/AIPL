@@ -1272,11 +1272,18 @@
               frames.push(img);
             }
 
+            let lastDrawnFrame = -1;
             function render() {
-              const image = frames[Math.round(sequence.frame)];
+              const currentFrame = Math.round(sequence.frame);
+              // OPTIMIZATION: Only draw if the frame number actually changed
+              if (currentFrame === lastDrawnFrame) return;
+              
+              const image = frames[currentFrame];
               if (!image || !image.complete) return;
+              
+              lastDrawnFrame = currentFrame;
 
-              // Support devicePixelRatio for sharp rendering
+              // Support devicePixelRatio for sharp rendering, cap at 2 for performance
               const dpr = Math.min(window.devicePixelRatio || 1, 2);
               const cw = window.innerWidth;
               const ch = window.innerHeight;
@@ -1300,9 +1307,7 @@
               const x = (cw - width) / 2;
               const y = (ch - height) / 2;
 
-              // Draw image
-              ctx.fillStyle = '#000';
-              ctx.fillRect(0, 0, cw, ch);
+              // OPTIMIZATION: We don't need fillRect since the image covers 100% of the canvas
               ctx.drawImage(image, x, y, width, height);
             }
 
@@ -1314,7 +1319,7 @@
                 trigger: ".factory-sequence",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.35,
+                scrub: 1, // Increased scrub for smoother mobile interpolation
                 onEnter: () => gsap.to('#intro-scroll-indicator', { opacity: 0, duration: 0.3 }),
                 onLeaveBack: () => gsap.to('#intro-scroll-indicator', { opacity: 1, duration: 0.3 }),
               },
