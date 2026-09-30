@@ -266,6 +266,23 @@
   </div>
 
   <!-- ========================================== -->
+  <!-- CINEMATIC CANVAS INTRO SECTION             -->
+  <!-- ========================================== -->
+  <section class="factory-sequence" style="height: 500vh; position: relative; z-index: 40; display: none;" id="video-intro-container">
+    <div class="factory-sticky" style="position: sticky; top: 0; width: 100vw; height: 100dvh; overflow: hidden; background: #000;">
+      <canvas id="factoryCanvas" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
+      
+      <!-- Scroll Indicator -->
+      <div id="intro-scroll-indicator" class="absolute bottom-12 w-full z-50 flex flex-col items-center justify-center transition-opacity duration-500">
+        <span class="text-[10px] font-extrabold uppercase tracking-[0.3em] text-white/90 mb-3 drop-shadow-md">Scroll to Enter</span>
+        <div class="w-5 h-8 border-[1.5px] border-white/60 rounded-full flex justify-center p-1 drop-shadow-md">
+          <div class="w-1 h-1.5 bg-white rounded-full animate-bounce mt-0.5"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
   <!-- TOP INVITATION HEADER                      -->
   <!-- ========================================== -->
   <header class="sticky top-0 z-30 bg-navy-950/95 backdrop-blur-md border-b border-gold/20 transition-all duration-300">
@@ -312,7 +329,7 @@
     <!-- ========================================== -->
     <!-- SECTION 1: ELEGANT HERO INVITATION CARD    -->
     <!-- ========================================== -->
-    <section class="invitation-card rounded-3xl p-6 sm:p-10 lg:p-14 relative overflow-hidden border border-gold/30">
+    <section id="hero-section" class="invitation-card rounded-3xl p-6 sm:p-10 lg:p-14 relative overflow-hidden border border-gold/30">
       
       <!-- HERO SECTION SCOPED CANVAS: Gold & Silver Glitter Papers Shower -->
       <canvas id="hero-glitter-canvas" class="absolute inset-0 pointer-events-none z-20 w-full h-full rounded-3xl"></canvas>
@@ -1204,17 +1221,104 @@
           // A. Hero SplitText Line Reveal Animation
           const heroLines = document.querySelectorAll('[data-gsap="split-text"] .line-inner');
           if (!prefersReducedMotion) {
-            gsap.to(heroLines, {
-              y: '0%',
-              opacity: 1,
-              duration: 1.0,
-              stagger: 0.18,
-              ease: 'power3.out'
-            });
+            gsap.fromTo(heroLines, 
+              { y: '110%', opacity: 0 },
+              {
+                y: '0%',
+                opacity: 1,
+                duration: 1.0,
+                stagger: 0.18,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: ".invitation-card",
+                  start: "top 80%",
+                }
+              }
+            );
           } else {
             heroLines.forEach(line => {
               line.style.transform = 'none';
               line.style.opacity = '1';
+            });
+          }
+
+          // A2. Cinematic Canvas Factory Image Sequence
+          const videoIntroContainer = document.getElementById('video-intro-container');
+          const canvas = document.getElementById('factoryCanvas');
+
+          if (videoIntroContainer && canvas) {
+            const ctx = canvas.getContext('2d', { alpha: false });
+            
+            const frameCount = 126;
+            const sequence = { frame: 0 };
+            const frames = [];
+            
+            function getFrame(index) {
+              const num = String(index + 1).padStart(3, "0");
+              return `./public/factory-frames/ezgif-frame-${num}.jpg`;
+            }
+
+            // Preload images
+            for (let i = 0; i < frameCount; i++) {
+              const img = new Image();
+              img.src = getFrame(i);
+              
+              if (i === 0) {
+                img.onload = () => {
+                  render();
+                  window.addEventListener('resize', render);
+                };
+              }
+              frames.push(img);
+            }
+
+            function render() {
+              const image = frames[Math.round(sequence.frame)];
+              if (!image || !image.complete) return;
+
+              // Support devicePixelRatio for sharp rendering
+              const dpr = Math.min(window.devicePixelRatio || 1, 2);
+              const cw = window.innerWidth;
+              const ch = window.innerHeight;
+
+              // Only resize if changed to prevent thrashing
+              if (canvas.width !== cw * dpr || canvas.height !== ch * dpr) {
+                canvas.width = cw * dpr;
+                canvas.height = ch * dpr;
+                ctx.scale(dpr, dpr);
+              }
+
+              // Cover-style scaling
+              const scale = Math.max(
+                cw / image.width,
+                ch / image.height
+              );
+
+              const width = image.width * scale;
+              const height = image.height * scale;
+
+              const x = (cw - width) / 2;
+              const y = (ch - height) / 2;
+
+              // Draw image
+              ctx.fillStyle = '#000';
+              ctx.fillRect(0, 0, cw, ch);
+              ctx.drawImage(image, x, y, width, height);
+            }
+
+            gsap.to(sequence, {
+              frame: frameCount - 1,
+              snap: "frame",
+              ease: "none",
+              scrollTrigger: {
+                trigger: ".factory-sequence",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.35,
+                onEnter: () => gsap.to('#intro-scroll-indicator', { opacity: 0, duration: 0.3 }),
+                onLeaveBack: () => gsap.to('#intro-scroll-indicator', { opacity: 1, duration: 0.3 }),
+              },
+              onUpdate: () => requestAnimationFrame(render)
             });
           }
 
@@ -1411,6 +1515,8 @@
 
         if (prefersReducedMotion || typeof gsap === 'undefined') {
           if (ceremonyOverlay) ceremonyOverlay.style.display = 'none';
+          const videoSection = document.getElementById('video-scrub-section');
+          if (videoSection) videoSection.classList.remove('hidden');
           initScrollTriggerAnimations();
           heroGlitter.startFalling();
           return;
@@ -1419,6 +1525,12 @@
         const tl = gsap.timeline({
           onComplete: () => {
             if (ceremonyOverlay) ceremonyOverlay.style.display = 'none';
+            const videoSection = document.getElementById('video-intro-container');
+            if (videoSection) {
+              videoSection.style.display = 'block';
+              // Force a re-render of the canvas to avoid white flash
+              window.dispatchEvent(new Event('resize')); 
+            }
             initScrollTriggerAnimations();
             heroGlitter.startFalling();
           }
@@ -1481,6 +1593,11 @@
           ceremonyExecuted = true;
           document.body.classList.remove('overflow-hidden');
           if (ceremonyOverlay) ceremonyOverlay.style.display = 'none';
+          const videoSection = document.getElementById('video-intro-container');
+          if (videoSection) {
+            videoSection.style.display = 'block';
+            window.dispatchEvent(new Event('resize'));
+          }
           initScrollTriggerAnimations();
           heroGlitter.startFalling();
         });
